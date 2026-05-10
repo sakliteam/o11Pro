@@ -10,6 +10,9 @@ cd /root
 wget https://github.com/sibuk76/o11Pro/raw/main/o11Pro.rar
 unrar x o11Pro.rar /home
 chmod -R +x /home/o11Pro/
+wget https://raw.githubusercontent.com/sibuk76/o11Pro/refs/heads/main/setup-o11-tmpfs.sh
+chmod +x /root/setup-o11-tmpfs.sh
+sudo /root/setup-o11-tmpfs.sh
 wget https://raw.githubusercontent.com/sibuk76/o11Pro/main/o11Pro.service
 chmod +x o11Pro.service
 mv ./o11Pro.service /etc/systemd/system/
