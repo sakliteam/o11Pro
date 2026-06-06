@@ -1,20 +1,26 @@
 [Unit]
-Description=o11
-After=network.target local-fs.target
-RequiresMountsFor=/home/o11Pro/hls /home/o11Pro/dl
+Description=o11Pro streaming server
+After=network-online.target local-fs.target
+Wants=network-online.target
+RequiresMountsFor=/home/o11Pro/dl
 
 [Service]
 Type=simple
+User=root
+WorkingDirectory=/home/o11Pro
+
+# Restart'ta eski HLS segmentlerini temizle (temiz başlangıç)
+ExecStartPre=/bin/sh -c 'rm -rf /home/o11Pro/hls/live/* /home/o11Pro/hls/live/.[!.]* 2>/dev/null; true'
+
 ExecStart=/home/o11Pro/o11Pro \
     -p 6060 \
-    -streamport 25676 \
+    -streamport 8080 \
     -f /usr/local/bin/ffmpeg \
     -path /home/o11Pro
 
 Restart=always
 RestartSec=5
-User=root
-WorkingDirectory=/home/o11Pro
+LimitNOFILE=1048576
 
 [Install]
 WantedBy=multi-user.target
